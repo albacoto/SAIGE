@@ -31,11 +31,35 @@ For the data it is also a must to have an enviroment with plink installed since 
 
 Use iPSYCH common variants to construct GRM
 1. Keep only MAF>=5% in ipsych.vcf --> filtered_data
-
 ```sh
 plink --vcf ipsych.vcf --maf 0.05 --make-bed --out filtered_data 
 ```
 
+2. Do LD pruning for common variants --> pruned_data
+```sh
+plink --bfile filtered_data --indep-pairwise 50 5 0.2 --out pruned_data
+plink --bfile filtered_data --extract pruned_data.prune.in --make-bed --out pruned_filtered_data
+```
 
-3. Do LD pruning for common variants --> pruned_data
+This will output new .bed, .bim, and .fam files containing only the pruned variants.
+
+3. Generate sparse GRM
+```sh
+Rscript createSparseGRM.R       \
+    --plinkFile=/home/ialbacoto/Alba_PiB_project_2024fall/data/pruned_filtered_data \
+    --nThreads=72  \
+    --outputPrefix=/home/ialbacoto/Alba_PiB_project_2024fall/people/albacoto/pruned_filtered_sparseGRM      \
+    --numRandomMarkerforSparseKin=5000      \
+    --relatednessCutoff=0.05
+```
+
+   - nThreads: number of threads to use for parallel processing
+   - numRandomMarkerforSparseKin=5000: number of random markers for calculating kinship/relatedness
+   - Cutoff: cutoff for excluding individuals with high relatedness
+
+High-performance computing cluster or a powerful machine with many cores uses 72 threads for faster execution.
+More markers typically lead to more accurate estimates of relatedness.
+Relatedness cutoff of 0.05 (stricter), meaning individuals with closer relationships (e.g., 1st or 2nd degree relatives) are excluded.
+
+     
 
