@@ -11,11 +11,15 @@ Data for this porject is coming from dried blood samples and it is stored in a f
 
 PREPARATION FOR SAIGE
 (The work will be done in a closed zone)
-1.	Install conda through genomedk 
-2.	Conda install saige gene
+1.	Install conda in the closed zone
+2.	Create an enviroment to conduct the SAIGE methodology
+3.	Conda install SAIGE
 
 https://anaconda.org/bioconda/r-saige
 
+For the data it is also a must to have an enviroment with plink installed since we are going to need it to obtain some input for SAIGE.
 
+
+https://saigegit.github.io/SAIGE-doc/
 
 
