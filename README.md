@@ -20,12 +20,19 @@ https://anaconda.org/bioconda/r-saige
 For the data it is also a must to have an enviroment with plink installed since we are going to need it to obtain some input for SAIGE.
 
 
-## OVERVIEW of STEPS:
+## OVERVIEW of STEPS: (https://saigegit.github.io/SAIGE-doc/)
 
 <img width="750" alt="Captura de pantalla 2024-10-29 a las 12 36 17" src="https://github.com/user-attachments/assets/5a31d46f-60d7-4f30-93b3-3d2cdd50d7b9">
 
 
-https://saigegit.github.io/SAIGE-doc/
 
 
+# GRM
+
+Use iPSYCH common variants to construct GRM
+1. Keep only MAF>=5% in ipsych.vcf --> filtered_data
+plink --vcf ipsych.vcf --maf 0.05 --make-bed --out filtered_data
+
+
+2. Do LD pruning for common variants --> pruned_data
 
