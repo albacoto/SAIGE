@@ -61,5 +61,10 @@ High-performance computing cluster or a powerful machine with many cores uses 72
 More markers typically lead to more accurate estimates of relatedness.
 Relatedness cutoff of 0.05 (stricter), meaning individuals with closer relationships (e.g., 1st or 2nd degree relatives) are excluded.
 
-     
+
+OBTAIN:
+-	sparseGRM.mtx --> file containing the sparse GRM
+-	sparseGRM.mtx.sampleIDs.txt --> file containing sample IDs in the sparse GRM.
+
+
 
