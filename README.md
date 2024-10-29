@@ -31,8 +31,11 @@ For the data it is also a must to have an enviroment with plink installed since 
 
 Use iPSYCH common variants to construct GRM
 1. Keep only MAF>=5% in ipsych.vcf --> filtered_data
-plink --vcf ipsych.vcf --maf 0.05 --make-bed --out filtered_data
+
+```sh
+plink --vcf ipsych.vcf --maf 0.05 --make-bed --out filtered_data 
+```
 
 
-2. Do LD pruning for common variants --> pruned_data
+3. Do LD pruning for common variants --> pruned_data
 
