@@ -115,7 +115,40 @@ Obtain plink files from the vcf file
 plink --vcf asd_ctl.vcf.gz --make-bed --out asd_ctl
 ```
 
-(Optional) get ids for 1000 random markers for each MAC category. Calcuate allele counts for each marker in the large plink file.
+(Optional) get ids for 1000 random markers for each MAC category. Calculate allele counts for each marker in the large plink file.
 ```sh
 plink2 --bfile asd_ctl --freq counts --out asd_ctl
+```
+
+Randomly extract IDs for markers falling in the two MAC categories
+```sh
+cat <(tail -n +2 asd_ctl.acount | awk '((2*$6-$5) < 20 && (2*$6-$5) >= 10) || ($5 < 20 && $5 >= 10) {print $2}' | shuf -n 1000) \
+<(tail -n +2 asd_ctl.acount | awk ' $5 >= 20 && (2*$6-$5)>= 20 {print $2}' | shuf -n 1000) > asd_ctl.forCate_vr.markerid.list
+```
+
+Extract markers from the large plink file
+```sh
+plink2 --bfile asd_ctl --extract asd_ctl.forCate_vr.markerid.list --make-bed --out asd_ctl.forCate_vr
+```
+
+After this we are finally able to start with STEP1:
+** input files **
+- sparse GRM files --> obtained in STEP0
+- plink file --> obtained in the steps above
+- pheno file --> !!
+```sh
+Rscript step1_fitNULLGLMM.R     \
+    --sparseGRMFile="/home/ialbacoto/Alba_PiB_project_2024fall/people/albacoto/sparseGRM_relatednessCutoff_0.125_2000_randomMarkersUsed.sparseGRM.mtx"   \
+    --sparseGRMSampleIDFile="/home/ialbacoto/Alba_PiB_project_2024fall/people/albacoto/sparseGRM_relatednessCutoff_0.125_2000_randomMarkersUsed.sparseGRM.mtx.sampleIDs.txt"    \
+    --plinkFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/asd_ctl.forCate_vr" \
+    --useSparseGRMtoFitNULL=TRUE    \
+    --phenoFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ipsych_postQC.txt" \
+    --phenoCol=y_binary \
+    --covarColList=sex.1 \
+    --qCovarColList=sex.1  \
+    --sampleIDColinphenoFile=IID \
+    --traitType=binary        \
+    --isCateVarianceRatio=TRUE	\
+    --outputPrefix="/home/ialbacoto/Alba_PiB_project_2024fall/data"	\
+    --IsOverwriteVarianceRatioFile=TRUE	
 ```
