@@ -132,7 +132,8 @@ plink2 --bfile asd_ctl --extract asd_ctl.forCate_vr.markerid.list --make-bed --o
 ```
 
 After this we are finally able to start with STEP1:
-** input files **
+
+__ input files __
 - sparse GRM files --> obtained in STEP0
 - plink file --> obtained in the steps above
 - pheno file --> !!
