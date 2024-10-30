@@ -69,8 +69,13 @@ OBTAIN:
 
 # STEP 1
 Previous step before performing STEP 1 is to separate the raw vcf file depending on the disorder. That way we are able to see each disorder separately.
-1. First we will separate the raw vcf file from the asd_adhd_sz_bp_ctl.ped in Rstudio. We need to keep individuals with either ASD==1 (positive for ASD) or Control==1 (which are the controls) --> We will obtain a file called ASD_samples.txt
+1. First we will separate the raw vcf file from the asd_adhd_sz_bp_ctl.ped in <Rstudio>. We need to keep individuals with either ASD==1 (positive for ASD) or Control==1 (which are the controls) --> We will obtain a file called ASD_samples.txt
+```sh
+install.packages("data.table")
+library(data.table)
+```
 2. 
+3. 
 
 
 ```sh
