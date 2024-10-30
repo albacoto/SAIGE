@@ -109,9 +109,13 @@ bcftools view -S ASD_samples.txt -a -c 1 -Oz -o asd_ctl.vcf.gz asd_adhd_sz_bp_ct
 ```-o asd_ctl.vcf.gz```: Specifies the name of the output file.
 
 
-** STARTING STEP1 **
+### STARTING STEP1 
+Obtain plink files from the vcf file
 ```sh
-#(Optional) get ids for 1000 random markers for each MAC category
-## calcuate allele counts for each marker in the large plink file
-plink2 --bfile asd_adhd_sz_bp_ctl_hg38_inDGCCregions_vepPICK_casecontrol.vcf.gz --freq counts --out pruned_filtered_data
+plink --vcf asd_ctl.vcf.gz --make-bed --out asd_ctl
+```
+
+(Optional) get ids for 1000 random markers for each MAC category. Calcuate allele counts for each marker in the large plink file.
+```sh
+plink2 --bfile asd_ctl --freq counts --out asd_ctl
 ```
