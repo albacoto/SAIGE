@@ -98,7 +98,7 @@ writeLines(all_samples, "ASD_samples.txt")
 bcftools view -S ASD_samples.txt -a -c 1 -Oz -o asd_ctl.vcf.gz asd_adhd_sz_bp_ctl_hg38_inDGCCregions_vepPICK_casecontrol.vcf.gz
 ```
 
--S ASD_samples.txt: Specifies the file containing the sample IDs we want to keep (ASD samples).
+```-S ASD_samples.txt```: Specifies the file containing the sample IDs we want to keep (ASD samples).
 
 -a: This option is set to include all alleles, which is useful to keep all information related to variants.
 
