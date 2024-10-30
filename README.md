@@ -69,6 +69,8 @@ OBTAIN:
 
 # STEP 1
 Previous step before performing STEP 1 is to separate the raw vcf file depending on the disorder. That way we are able to see each disorder separately.
+
+
 1. First we will separate the raw vcf file from the asd_adhd_sz_bp_ctl.ped in _Rstudio_. We need to keep individuals with either ASD==1 (positive for ASD) or Control==1 (which are the controls) --> We will obtain a file called ASD_samples.txt
   
 ```sh
@@ -91,8 +93,17 @@ writeLines(all_samples, "ASD_samples.txt")
 ```
 
 
-2. 
-3. 
+2. Following, we run in the _terminal, closed zone_ a bcftools comand to create the new vcf file with only ASD & control data.
+```sh
+bcftools view -S ASD_samples.txt -a -c 1 -Oz -o asd_ctl.vcf.gz asd_adhd_sz_bp_ctl_hg38_inDGCCregions_vepPICK_casecontrol.vcf.gz
+```
+
+-S ASD_samples.txt: Specifies the file containing the sample IDs we want to keep (ASD samples).
+-a: This option is set to include all alleles, which is useful to keep all information related to variants.
+-c 1: Keeps only sites with at least one allele for the specified samples, ensuring that we only get variants that are present in the filtered list.
+-Oz: This option compresses the output file in the BGZF format, which is suitable for VCF files.
+-o asd_ctl.vcf.gz: Specifies the name of the output file.
+
 
 
 ```sh
