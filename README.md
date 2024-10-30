@@ -109,7 +109,7 @@ bcftools view -S ASD_samples.txt -a -c 1 -Oz -o asd_ctl.vcf.gz asd_adhd_sz_bp_ct
 ```-o asd_ctl.vcf.gz```: Specifies the name of the output file.
 
 
-
+** STARTING STEP1 **
 ```sh
 #(Optional) get ids for 1000 random markers for each MAC category
 ## calcuate allele counts for each marker in the large plink file
