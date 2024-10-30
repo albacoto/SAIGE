@@ -27,7 +27,7 @@ For the data it is also a must to have an enviroment with plink installed since 
 
 
 
-# GRM
+# GRM (STEP 0)
 
 Use iPSYCH common variants to construct GRM
 1. Keep only MAF>=5% in ipsych.vcf --> filtered_data
@@ -67,4 +67,12 @@ OBTAIN:
 -	sparseGRM.mtx.sampleIDs.txt --> file containing sample IDs in the sparse GRM.
 
 
+# STEP 1
+Previous step before performing STEP 1 is to separate the raw vcf file depending on the disorder. That way we are able to see each disorder separately.
 
+
+```sh
+#(Optional) get ids for 1000 random markers for each MAC category
+## calcuate allele counts for each marker in the large plink file
+plink2 --bfile asd_adhd_sz_bp_ctl_hg38_inDGCCregions_vepPICK_casecontrol.vcf.gz --freq counts --out pruned_filtered_data
+```
