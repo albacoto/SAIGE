@@ -145,18 +145,21 @@ INPUT FILES:
 
 
 ```sh
-Rscript step1_fitNULLGLMM.R     \
-    --sparseGRMFile="/home/ialbacoto/Alba_PiB_project_2024fall/people/albacoto/sparseGRM_relatednessCutoff_0.125_2000_randomMarkersUsed.sparseGRM.mtx"   \
-    --sparseGRMSampleIDFile="/home/ialbacoto/Alba_PiB_project_2024fall/people/albacoto/sparseGRM_relatednessCutoff_0.125_2000_randomMarkersUsed.sparseGRM.mtx.sampleIDs.txt"    \
-    --plinkFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/asd_ctl.forCate_vr" \
-    --useSparseGRMtoFitNULL=TRUE    \
-    --phenoFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ipsych_postQC.txt" \
-    --phenoCol=y_binary \
-    --covarColList=sex.1 \
-    --qCovarColList=sex.1  \
-    --sampleIDColinphenoFile=IID \
-    --traitType=binary        \
-    --isCateVarianceRatio=TRUE	\
-    --outputPrefix="/home/ialbacoto/Alba_PiB_project_2024fall/data"	\
-    --IsOverwriteVarianceRatioFile=TRUE	
+ Rscript step1_fitNULLGLMM.R     \
+     --plinkFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/asd_ctl.forCate_vr"  \
+     --sparseGRMFile="/home/ialbacoto/Alba_PiB_project_2024fall/people/albacoto/sparseGRM_relatednessCutoff_0.125_2000_randomMarkersUsed.sparseGRM.mtx"   \
+     --sparseGRMSampleIDFile="/home/ialbacoto/Alba_PiB_project_2024fall/people/albacoto/sparseGRM_relatednessCutoff_0.125_2000_randomMarkersUsed.sparseGRM.mtx.sampleIDs.txt"     \
+     --phenoFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/phenotype_data.txt" \
+     --phenoCol=y_binary \
+     --covarColList=x1,x2 \
+     --sampleIDColinphenoFile=pid \
+     --traitType=binary        \
+     --outputPrefix="/home/ialbacoto/Alba_PiB_project_2024fall/data" \
+     --nThreads=64    \
+     --useSparseGRMtoFitNULL=FALSE    \
+     --isCateVarianceRatio=TRUE      \
+     --useSparseGRMforVarRatio=TRUE  \
+     --IsOverwriteVarianceRatioFile=TRUE
 ```
+
+```qCovarColList```: This list is used for quantitative covariates.
