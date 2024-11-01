@@ -137,7 +137,9 @@ INPUT FILES:
 - sparse GRM files --> obtained in STEP0
 - plink file --> obtained in the steps above
 - pheno file --> It is required that the file contains one column for sample IDs and one column for the phenotype. It may contain columns for covariates. (can use *rstudio*)
+
                   Make sure to have y_binary column: 0 for control + 1 for ASD & make necessary changes to covariates (we can remove columns that are not necessary).
+  
                   We obtain it from the csv file. From *csv --> txt* file.
 
 
