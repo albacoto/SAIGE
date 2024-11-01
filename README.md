@@ -136,7 +136,11 @@ After this we are finally able to start with STEP1:
 INPUT FILES:
 - sparse GRM files --> obtained in STEP0
 - plink file --> obtained in the steps above
-- pheno file --> !!
+- pheno file --> It is required that the file contains one column for sample IDs and one column for the phenotype. It may contain columns for covariates. (can use *rstudio*)
+                  Make sure to have y_binary column: 0 for control + 1 for ASD & make necessary changes to covariates (we can remove columns that are not necessary).
+                  We obtain it from the csv file. From *csv --> txt* file.
+
+
 ```sh
 Rscript step1_fitNULLGLMM.R     \
     --sparseGRMFile="/home/ialbacoto/Alba_PiB_project_2024fall/people/albacoto/sparseGRM_relatednessCutoff_0.125_2000_randomMarkersUsed.sparseGRM.mtx"   \
