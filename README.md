@@ -152,7 +152,7 @@ INPUT FILES:
      --phenoFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/phenotype_data.txt" \
      --phenoCol=y_binary \
      --covarColList=x1,x2 \
-     --sampleIDColinphenoFile=pid \
+     --sampleIDColinphenoFile=vcfID \
      --traitType=binary        \
      --outputPrefix="/home/ialbacoto/Alba_PiB_project_2024fall/data" \
      --nThreads=64    \
