@@ -165,3 +165,9 @@ INPUT FILES:
 ```
 
 ```qCovarColList```: This list is used for quantitative covariates.
+
+OUTPUT FILES:
+- model file --> *data.Rda* 
+- variance ratio file --> *data.varianceRatio.txt*
+
+both are going to be inputs for STEP2
