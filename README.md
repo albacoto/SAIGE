@@ -167,7 +167,9 @@ INPUT FILES:
 ```qCovarColList```: This list is used for quantitative covariates.
 
 OUTPUT FILES:
-- model file --> *data.Rda*. Inside this file: theta --> vector with 2 elements & coefficients --> coefficient estimates for covariates in the model and intercept estimate
+- model file --> *data.Rda*.
+
+  Inside this file: theta --> vector with 2 elements & coefficients --> coefficient estimates for covariates in the model and intercept estimate
   
 - variance ratio file --> *data.varianceRatio.txt*
 
