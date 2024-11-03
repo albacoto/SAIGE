@@ -169,8 +169,9 @@ INPUT FILES:
 OUTPUT FILES:
 - model file --> *data.Rda*
 
-    theta --> vector with 2 elements
-    coefficients --> coefficient estimates for covariates in the model and intercept estimate
+     theta --> vector with 2 elements
+
+     coefficients --> coefficient estimates for covariates in the model and intercept estimate
   
 - variance ratio file --> *data.varianceRatio.txt*
 
