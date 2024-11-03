@@ -131,6 +131,8 @@ Extract markers from the large plink file
 plink2 --bfile asd_ctl --extract asd_ctl.forCate_vr.markerid.list --make-bed --out asd_ctl.forCate_vr
 ```
 
+* Make sure that the chromosomes X & Y in the .bim file are substituted by number 23 & 24 (because SAIGE does not support letters).
+
 After this we are finally able to start with STEP1:
 
 INPUT FILES:
