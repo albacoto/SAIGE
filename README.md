@@ -109,7 +109,7 @@ bcftools view -S ASD_samples.txt -a -c 1 -Oz -o asd_ctl.vcf.gz asd_adhd_sz_bp_ct
 ```-o asd_ctl.vcf.gz```: Specifies the name of the output file.
 
 
-### STARTING STEP1 
+### STEP1 
 Obtain plink files from the vcf file
 ```sh
 plink --vcf asd_ctl.vcf.gz --make-bed --out asd_ctl
@@ -136,9 +136,9 @@ plink2 --bfile asd_ctl --extract asd_ctl.forCate_vr.markerid.list --make-bed --o
 After this we are finally able to start with STEP1:
 
 INPUT FILES:
-- sparse GRM files --> obtained in STEP0
-- plink file --> obtained in the steps above
-- pheno file --> We obtain it from the csv file. From *csv --> txt* file.
+- Sparse GRM files --> obtained in STEP0
+- Plink file --> obtained in the steps above
+- Pheno file --> We obtain it from the csv file. From *csv --> txt* file.
 
   It is required that the file contains one column for sample IDs and one column for the phenotype. It may contain columns for covariates. (can use *rstudio*).
   Make sure to have y_binary column: 0 for control + 1 for ASD & make necessary changes to covariates (we can remove columns that are not necessary).
@@ -174,5 +174,35 @@ OUTPUT FILES:
 - variance ratio file --> *data.varianceRatio.txt*
 
 both are going to be inputs for STEP2
+
+
+
+
+### STEP2
+
+INPUT FILES:
+- Group file --> with genetic marker IDs and annotations.
+
+```sh
+ Rscript step2_SPAtests.R        \
+     --bgenFile=./input/genotype_100markers.bgen    \
+     --bgenFileIndex=./input/genotype_100markers.bgen.bgi \
+     --SAIGEOutputFile=./output/genotype_100markers_bgen_groupTest_out.txt \
+     --chrom=1 \
+     --AlleleOrder=ref-first \
+     --minMAF=0 \
+     --minMAC=0.5 \
+     --sampleFile=./input/samplelist.txt \
+     --GMMATmodelFile=./output/example_binary_sparseGRM.rda \
+     --varianceRatioFile=./output/example_binary_sparseGRM.varianceRatio.txt      \
+     --sparseGRMFile=output/sparseGRM_relatednessCutoff_0.125_1000_randomMarkersUsed.sparseGRM.mtx   \
+     --sparseGRMSampleIDFile=output/sparseGRM_relatednessCutoff_0.125_1000_randomMarkersUsed.sparseGRM.mtx.sampleIDs.txt  \
+     --groupFile=./input/group_new_chrposa1a2.txt    \
+     --annotation_in_groupTest="lof,missense:lof,missense:lof:synonymous"        \
+     --maxMAF_in_groupTest=0.0001,0.001,0.01 \
+     --is_output_markerList_in_groupTest=TRUE \
+     --LOCO=FALSE \
+     --is_fastTest=TRUE
+```
 
 
