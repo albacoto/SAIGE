@@ -181,7 +181,7 @@ both are going to be inputs for STEP2
 ### STEP2
 
 INPUT FILES:
-- Group file --> with genetic marker IDs and annotations.
+- Group file --> with genes, marker IDs and annotations.
 
 ```sh
  Rscript step2_SPAtests.R        \
