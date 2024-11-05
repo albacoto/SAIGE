@@ -205,7 +205,7 @@ To obtain this file we should perform the following steps in Rstudio:
      --varianceRatioFile=./output/example_binary_sparseGRM.varianceRatio.txt      \
      --sparseGRMFile=output/sparseGRM_relatednessCutoff_0.125_1000_randomMarkersUsed.sparseGRM.mtx   \
      --sparseGRMSampleIDFile=output/sparseGRM_relatednessCutoff_0.125_1000_randomMarkersUsed.sparseGRM.mtx.sampleIDs.txt  \
-     --groupFile=./input/group_new_chrposa1a2.txt    \
+     --groupFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/ASD_group_file_formatted.txt"    \
      --annotation_in_groupTest="lof,missense:lof,missense:lof:synonymous"        \
      --maxMAF_in_groupTest=0.0001,0.001,0.01 \
      --is_output_markerList_in_groupTest=TRUE \
