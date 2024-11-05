@@ -184,6 +184,13 @@ both are going to be inputs for STEP2
 INPUT FILES:
 - Group file --> with genes, marker IDs and annotations.
 
+To obtain this file we should perform the following steps in Rstudio:
+1. Load full ASD .bim file *asd_ctl.bim* and extract marker IDs
+2. Load .gene.marker.ann.txt file
+3. Filter the .gene.marker.ann.txt for ASD markers
+4. Merge the data and create var & anno lines (to obtain the correct formatting)
+
+
 ```sh
  Rscript step2_SPAtests.R        \
      --bgenFile=./input/genotype_100markers.bgen    \
