@@ -190,27 +190,31 @@ To obtain this file we should perform the following steps in Rstudio:
 3. Filter the .gene.marker.ann.txt for ASD markers
 4. Merge the data and create var & anno lines (to obtain the correct formatting)
 
+- GMMAT & and varianceRatio are the files generated in STEP1
 
 ```sh
- Rscript step2_SPAtests.R        \
-     --bgenFile=./input/genotype_100markers.bgen    \
-     --bgenFileIndex=./input/genotype_100markers.bgen.bgi \
-     --SAIGEOutputFile=./output/genotype_100markers_bgen_groupTest_out.txt \
+Rscript step2_SPAtests.R        \
+     --bedFile=./input/genotype_100markers.bed       \
+     --bimFile=./input/genotype_100markers.bim       \
+     --famFile=./input/genotype_100markers.fam       \
+     --SAIGEOutputFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/output" \
      --chrom=1 \
-     --AlleleOrder=ref-first \
+     --LOCO=TRUE    \
+     --AlleleOrder=alt-first \
      --minMAF=0 \
      --minMAC=0.5 \
      --sampleFile=./input/samplelist.txt \
-     --GMMATmodelFile=./output/example_binary_sparseGRM.rda \
-     --varianceRatioFile=./output/example_binary_sparseGRM.varianceRatio.txt      \
+     --GMMATmodelFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/output/data.rda" \
+     --varianceRatioFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/output/data.varianceRatio.txt"      \
      --sparseGRMFile=output/sparseGRM_relatednessCutoff_0.125_1000_randomMarkersUsed.sparseGRM.mtx   \
-     --sparseGRMSampleIDFile=output/sparseGRM_relatednessCutoff_0.125_1000_randomMarkersUsed.sparseGRM.mtx.sampleIDs.txt  \
+     --sparseGRMSampleIDFile=output/sparseGRM_relatednessCutoff_0.125_1000_randomMarkersUsed.sparseGRM.mtx.sampleIDs.txt     \
      --groupFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/ASD_group_file_formatted.txt"    \
-     --annotation_in_groupTest="lof,missense:lof,missense:lof:synonymous"        \
-     --maxMAF_in_groupTest=0.0001,0.001,0.01 \
-     --is_output_markerList_in_groupTest=TRUE \
-     --LOCO=FALSE \
-     --is_fastTest=TRUE
+     --annotation_in_groupTest=lof,missense:lof,missense:lof:synonymous        \
+     --maxMAF_in_groupTest=0.0001,0.001,0.01
 ```
 
+–AlleleOrder can be alt-first or ref-first. It has to be correctly specified, otherwise, the variants in the PLINK file will not be matched with the markers in the groupFile
+
+
+ 
 
