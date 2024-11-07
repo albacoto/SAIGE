@@ -190,30 +190,35 @@ To obtain this file we should perform the following steps in Rstudio:
 3. Filter the .gene.marker.ann.txt for ASD markers
 4. Merge the data and create var & anno lines (to obtain the correct formatting)
 
+- Sample file --> sample IDs extracted from .fam file (with Rstudio)
+
 - GMMAT & and varianceRatio are the files generated in STEP1
+
 
 ```sh
 Rscript step2_SPAtests.R        \
-     --bedFile=./input/genotype_100markers.bed       \
-     --bimFile=./input/genotype_100markers.bim       \
-     --famFile=./input/genotype_100markers.fam       \
-     --SAIGEOutputFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/output" \
+     --bedFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/asd_ctl.bed"       \
+     --bimFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/asd_ctl.bim"       \
+     --famFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/asd_ctl.fam"       \
+     --SAIGEOutputFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/output/genotype_groupTest_out.txt" \
      --chrom=1 \
      --LOCO=TRUE    \
      --AlleleOrder=alt-first \
      --minMAF=0 \
      --minMAC=0.5 \
-     --sampleFile=./input/samplelist.txt \
+     --sampleFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/sample_ids.txt" \
      --GMMATmodelFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/output/data.rda" \
      --varianceRatioFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/output/data.varianceRatio.txt"      \
-     --sparseGRMFile=output/sparseGRM_relatednessCutoff_0.125_1000_randomMarkersUsed.sparseGRM.mtx   \
-     --sparseGRMSampleIDFile=output/sparseGRM_relatednessCutoff_0.125_1000_randomMarkersUsed.sparseGRM.mtx.sampleIDs.txt     \
+     --sparseGRMFile="/home/ialbacoto/Alba_PiB_project_2024fall/people/albacoto/sparseGRM_relatednessCutoff_0.125_2000_randomMarkersUsed.sparseGRM.mtx"   \
+     --sparseGRMSampleIDFile="/home/ialbacoto/Alba_PiB_project_2024fall/people/albacoto/sparseGRM_relatednessCutoff_0.125_2000_randomMarkersUsed.sparseGRM.mtx.sampleIDs.txt"    \
      --groupFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/ASD_group_file_formatted.txt"    \
-     --annotation_in_groupTest=lof,missense:lof,missense:lof:synonymous        \
+     --annotation_in_groupTest="pLoF,severeMis:pLoF,severeMis:pLoF:moderateMis,severeMis:pLoF:moderateMis:synonymous"       \
      --maxMAF_in_groupTest=0.0001,0.001,0.01
 ```
 
-–AlleleOrder can be alt-first or ref-first. It has to be correctly specified, otherwise, the variants in the PLINK file will not be matched with the markers in the groupFile
+```AlleleOrder```: can be alt-first or ref-first. 
+- ref-first: This setting treats the first allele listed in the genotype file as the reference allele (typically the more common allele in the population). The second allele is considered the alternative (less common or variant) allele.
+- alt-first: This setting treats the first allele as the alternative allele and the second as the reference.
 
 
  
