@@ -221,5 +221,13 @@ Rscript step2_SPAtests.R        \
 - alt-first: This setting treats the first allele as the alternative allele and the second as the reference.
 
 
+
+OUPUT FILES:
+- genotype_groupTest_out.txt --> file with region- or gene-based association test results
+- genotype_groupTest_out.txt.singleAssoc.txt--> file with association test results for single markers in the set-based tests
+
+
+
+
  
 
