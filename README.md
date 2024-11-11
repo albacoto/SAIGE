@@ -228,8 +228,8 @@ Rscript step2_SPAtests.R        \
      --minMAF=0 \
      --minMAC=0.5 \
      --sampleFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/sample_ids.txt" \
-     --GMMATmodelFile="/home/ialbacoto/Alba_PiB_project_2024fall/data.rda" \
-     --varianceRatioFile="/home/ialbacoto/Alba_PiB_project_2024fall/data.varianceRatio.txt"      \
+     --GMMATmodelFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/output/data.rda" \
+     --varianceRatioFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/output/data.varianceRatio.txt"      \
      --sparseGRMFile="/home/ialbacoto/Alba_PiB_project_2024fall/people/albacoto/sparseGRM_relatednessCutoff_0.125_2000_randomMarkersUsed.sparseGRM.mtx"   \
      --sparseGRMSampleIDFile="/home/ialbacoto/Alba_PiB_project_2024fall/people/albacoto/sparseGRM_relatednessCutoff_0.125_2000_randomMarkersUsed.sparseGRM.mtx.sampleIDs.txt"    \
      --groupFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/ASD_group_file_formatted.txt"    \
