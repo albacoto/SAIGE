@@ -152,7 +152,7 @@ INPUT FILES:
      --plinkFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/asd_ctl.forCate_vr"  \
      --sparseGRMFile="/home/ialbacoto/Alba_PiB_project_2024fall/people/albacoto/sparseGRM_relatednessCutoff_0.125_2000_randomMarkersUsed.sparseGRM.mtx"   \
      --sparseGRMSampleIDFile="/home/ialbacoto/Alba_PiB_project_2024fall/people/albacoto/sparseGRM_relatednessCutoff_0.125_2000_randomMarkersUsed.sparseGRM.mtx.sampleIDs.txt"     \
-     --phenoFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/phenotype_data.txt" \
+     --phenoFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/phenotype_data.txt" \
      --phenoCol=y_binary \
      --covarColList=x1,x2 \
      --sampleIDColinphenoFile=vcfID \
@@ -167,6 +167,27 @@ INPUT FILES:
 
 ```qCovarColList```: This list is used for quantitative covariates.
 
+
+To have all the covariates I generated a list with all covariates so I don't need to enter each name manually (done with *rstudio*) --> covarColList
+
+```sh
+Rscript step1_fitNULLGLMM.R     \
+    --plinkFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/asd_ctl.forCate_vr"  \
+    --sparseGRMFile="/home/ialbacoto/Alba_PiB_project_2024fall/people/albacoto/sparseGRM_relatednessCutoff_0.125_2000_randomMarkersUsed.sparseGRM.mtx"   \
+    --sparseGRMSampleIDFile="/home/ialbacoto/Alba_PiB_project_2024fall/people/albacoto/sparseGRM_relatednessCutoff_0.125_2000_randomMarkersUsed.sparseGRM.mtx.sampleIDs.txt"     \
+    --phenoFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/phenotype_data.txt" \
+    --phenoCol=y_binary \
+    --covarColList=$covarColList \
+    --sampleIDColinphenoFile=vcfID \
+    --traitType=binary        \
+    --outputPrefix="/home/ialbacoto/Alba_PiB_project_2024fall/data" \
+    --nThreads=64    \
+    --useSparseGRMtoFitNULL=FALSE    \
+    --isCateVarianceRatio=TRUE      \
+    --useSparseGRMforVarRatio=TRUE  \
+    --IsOverwriteVarianceRatioFile=TRUE
+```
+    
 OUTPUT FILES:
 - model file --> *data.Rda*.
 
@@ -200,15 +221,15 @@ Rscript step2_SPAtests.R        \
      --bedFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/asd_ctl.bed"       \
      --bimFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/asd_ctl.bim"       \
      --famFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/asd_ctl.fam"       \
-     --SAIGEOutputFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/output/genotype_groupTest_out.txt" \
+     --SAIGEOutputFile="/home/ialbacoto/Alba_PiB_project_2024fall/genotype_groupTest_out.txt" \
      --chrom=1 \
      --LOCO=TRUE    \
      --AlleleOrder=alt-first \
      --minMAF=0 \
      --minMAC=0.5 \
      --sampleFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/sample_ids.txt" \
-     --GMMATmodelFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/output/data.rda" \
-     --varianceRatioFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/output/data.varianceRatio.txt"      \
+     --GMMATmodelFile="/home/ialbacoto/Alba_PiB_project_2024fall/data.rda" \
+     --varianceRatioFile="/home/ialbacoto/Alba_PiB_project_2024fall/data.varianceRatio.txt"      \
      --sparseGRMFile="/home/ialbacoto/Alba_PiB_project_2024fall/people/albacoto/sparseGRM_relatednessCutoff_0.125_2000_randomMarkersUsed.sparseGRM.mtx"   \
      --sparseGRMSampleIDFile="/home/ialbacoto/Alba_PiB_project_2024fall/people/albacoto/sparseGRM_relatednessCutoff_0.125_2000_randomMarkersUsed.sparseGRM.mtx.sampleIDs.txt"    \
      --groupFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/ASD_group_file_formatted.txt"    \
