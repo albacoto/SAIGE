@@ -6,8 +6,8 @@ The disorders described are characterized by the involvement of both rare and co
 The SAIGE-GENE+ is a statistical tool designed to perform gene-based association tests, particularly in large-scale biobank data sets. 
 What SAIGE does is to test vairants with MAF (Minor Allele Frequency) <= 0.1, 0.01, 0.001 % (we use multiple mAF cutoffs to improve POWER).
 * To incorporate multiple --> MAF cutoffs --> functional annotations, multiple tests are needed for each gene and results need to be combined using:
-1. minimum p-value
-2. Cauchy combination method
+    1. minimum p-value
+    2. Cauchy combination method
 
 Data for this porject is coming from dried blood samples and it is stored in a file called iPSYCH2016 which has been updated from iPSYCH2012 and iPSYCH2015.
 
