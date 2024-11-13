@@ -248,7 +248,7 @@ Rscript step2_SPAtests.R        \
 
 
 OUPUT FILES:
-- genotype_groupTest_out.txt --> file with region- or gene-based association test results
+- genotype_groupTest_out.txt --> file with region- or gene-based association test results. The following columns will appear:
     1. Region: set name
     2. Group: annotation mask
     3. max_MAF: maximum MAF cutoff
