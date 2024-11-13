@@ -249,9 +249,26 @@ Rscript step2_SPAtests.R        \
 
 OUPUT FILES:
 - genotype_groupTest_out.txt --> file with region- or gene-based association test results
+    1. Region: set name
+    2. Group: annotation mask
+    3. max_MAF: maximum MAF cutoff
+    4. Pvalue: p value for SKAT-O test
+    5. Pvalue_Burden: p value for BURDEN test
+    6. Pvalue_SKAT: p value for SKAT test
+    7. BETA_Burden: effect size of BURDEN test
+    8. SE_Burden: standard error of BETA_Burden
+    9. MAC: minor allele count in the set
+    10. MAC_case: minor allele count in cases
+    11. MAC_control: minor allele count in controls
+    12. Number_rare: number of markers that are not ultra-rare with MAC > MACCutoff_to_CollapseUltraRare (=10 by default)
+    13. Number_ultra_rare: number of markers that are ultra-rare with MAC <= MACCutoff_to_CollapseUltraRare (=10 by default)
+
 - genotype_groupTest_out.txt.singleAssoc.txt--> file with association test results for single markers in the set-based tests
 
 
+
+
+# ANALYSIS OF THE RESULTS
 
 
  
