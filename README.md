@@ -148,7 +148,7 @@ INPUT FILES:
   Make sure to have y_binary column: 0 for control + 1 for ASD & make necessary changes to covariates (we can remove columns that are not necessary).
 
   
-  
+ * Change X & Y chromosmes to 23 & 24 in plink bim file!!! * 
 
 
 ```sh
