@@ -268,6 +268,7 @@ OUPUT FILES:
 
 
 # ANALYSIS OF THE RESULTS
+Perform the analysis with Rstudio
 
 
  
