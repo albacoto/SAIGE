@@ -114,9 +114,9 @@ bcftools view -S ASD_samples.txt -a -c 1 -Oz -o asd_ctl.vcf.gz asd_adhd_sz_bp_ct
 
 
 ### STEP1 
-Obtain plink files from the vcf file (*make sure to have plink2*)
+Obtain plink files from the vcf file
 ```sh
-plink2 --vcf adhd_ctl.vcf.gz --keep-allele-order --make-bed --out adhd2_ctl
+plink --vcf adhd_ctl.vcf.gz --keep-allele-order --make-bed --out adhd2_ctl
 ```
 
 (Optional) get ids for 1000 random markers for each MAC category. Calculate allele counts for each marker in the large plink file.
