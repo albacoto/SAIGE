@@ -114,7 +114,7 @@ bcftools view -S ASD_samples.txt -a -c 1 -Oz -o asd_ctl.vcf.gz asd_adhd_sz_bp_ct
 
 
 ### STEP1 
-Obtain plink files from the vcf file
+Obtain plink files from the vcf file (*make sure to have plink2*)
 ```sh
 plink --vcf asd_ctl.vcf.gz --make-bed --out asd_ctl
 ```
