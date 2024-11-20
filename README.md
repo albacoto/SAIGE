@@ -240,6 +240,28 @@ Rscript step2_SPAtests.R        \
      --maxMAF_in_groupTest=0.0001,0.001,0.01
 ```
 
+version2
+```sh
+Rscript step2_SPAtests.R        \
+     --bedFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/asd_ctl.bed"       \
+     --bimFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/asd_ctl.bim"       \
+     --famFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/asd_ctl.fam"       \
+     --SAIGEOutputFile="/home/ialbacoto/Alba_PiB_project_2024fall/genotype_groupTest_out.txt" \
+     --LOCO=FALSE    \
+     --AlleleOrder=ref-first \
+     --minMAF=0 \
+     --minMAC=0.5 \
+     --sampleFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/sample_ids.txt" \
+     --GMMATmodelFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/output/data.rda" \
+     --varianceRatioFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/output/data.varianceRatio.txt"      \
+     --sparseGRMFile="/home/ialbacoto/Alba_PiB_project_2024fall/people/albacoto/sparseGRM_relatednessCutoff_0.125_2000_randomMarkersUsed.sparseGRM.mtx"   \
+     --sparseGRMSampleIDFile="/home/ialbacoto/Alba_PiB_project_2024fall/people/albacoto/sparseGRM_relatednessCutoff_0.125_2000_randomMarkersUsed.sparseGRM.mtx.sampleIDs.txt"    \
+     --groupFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/ASD_group_file_formatted.txt"    \
+     --annotation_in_groupTest="pLoF,severeMis:pLoF,severeMis:pLoF:moderateMis,severeMis:pLoF:moderateMis:synonymous"       \
+     --maxMAF_in_groupTest=0.0001,0.001,0.01
+```
+
+
 ```AlleleOrder```: can be alt-first or ref-first. 
 - ref-first: This setting treats the first allele listed in the genotype file as the reference allele (typically the more common allele in the population). The second allele is considered the alternative (less common or variant) allele.
 - alt-first: This setting treats the first allele as the alternative allele and the second as the reference.
