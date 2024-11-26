@@ -278,8 +278,8 @@ Rscript step2_SPAtests.R        \
      --sparseGRMFile="/home/ialbacoto/Alba_PiB_project_2024fall/people/albacoto/sparseGRM_relatednessCutoff_0.125_2000_randomMarkersUsed.sparseGRM.mtx"   \
      --sparseGRMSampleIDFile="/home/ialbacoto/Alba_PiB_project_2024fall/people/albacoto/sparseGRM_relatednessCutoff_0.125_2000_randomMarkersUsed.sparseGRM.mtx.sampleIDs.txt"    \
      --groupFile="/home/ialbacoto/Alba_PiB_project_2024fall/data/ASD/ASD_group_file_formatted.txt"    \
-     --annotation_in_groupTest="pLoF,severeMis:pLoF,severeMis:pLoF:moderateMis"       \
-     --maxMAF_in_groupTest=0.0001,0.001,0.01
+     --annotation_in_groupTest="pLoF,severeMis:pLoF,severeMis:pLoF:moderateMis,severeMis:pLoF:moderateMis:synonymous"       \
+     --maxMAF_in_groupTest=0.0001,0.0003,0.00055
 ```
 
 
