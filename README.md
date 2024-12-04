@@ -83,7 +83,7 @@ library(data.table)
 ```
 
 ```sh
-ped_file <- "yourfile.ped"  # Replace with your actual .ped file path
+ped_file <- "asd_adhd_sz_bp_ctl.ped"  # Replace with .ped file path
 ped_data <- fread(ped_file, header = FALSE)
 ```
 
