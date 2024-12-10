@@ -282,6 +282,8 @@ Rscript step2_SPAtests.R        \
      --maxMAF_in_groupTest=0.0001,0.0003,0.00055
 ```
 
+Next, I will try it changing the last row of the command to: ```--maxMAC_in_groupTest=1,2,5,10```
+
 
 
 ```AlleleOrder```: can be alt-first or ref-first. 
