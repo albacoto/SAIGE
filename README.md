@@ -378,27 +378,30 @@ FOR VISUALIZATION: Scatter plot & bar plot
         Class 1: pLoF or severeMis.
 
        ```grep -E 'pLoF|missense' gene.maker.annotation | awk '{print $2}' > class1_marker_ids.txt```
+      
        ``` bcftools view -T class1_marker_ids.txt rare_variants_in_genes.vcf.gz -Oz -o class1_variants.vcf.gz ```
       
         Class 2: moderateMis.
 
-    ```grep 'moderateMis' gene.maker.annotation | awk '{print $2}' > class2_marker_ids.txt
-   bcftools view -T class2_marker_ids.txt rare_variants_in_genes.vcf.gz -Oz -o class2_variants.vcf.gz```
+        ``` grep 'moderateMis' gene.maker.annotation | awk '{print $2}' > class2_marker_ids.txt```
+   
+        ```bcftools view -T class2_marker_ids.txt rare_variants_in_genes.vcf.gz -Oz -o class2_variants.vcf.gz```
       
 5. IDENTIFY CARRIERS
     - Extract genotypes for all individuals in the filtered VCFs:
         For Class 1:
 
-          ```bcftools query -f '%CHROM\t%POS\t%REF\t%ALT[\t%GT]\n' class1_variants.vcf.gz > class1_genotypes.txt```
+         ```bcftools query -f '%CHROM\t%POS\t%REF\t%ALT[\t%GT]\n' class1_variants.vcf.gz > class1_genotypes.txt```
 
         For Class 2:
 
-          ```bcftools query -f '%CHROM\t%POS\t%REF\t%ALT[\t%GT]\n' class2_variants.vcf.gz > class2_genotypes.txt```
+         ```bcftools query -f '%CHROM\t%POS\t%REF\t%ALT[\t%GT]\n' class2_variants.vcf.gz > class2_genotypes.txt```
       
     - Identify carriers (carriers have genotypes 0/1, 1/0, or 1/1)
 
-          ```awk '{for (i=5; i<=NF; i++) if ($i ~ /1/) print i}' class1_genotypes.txt > class1_carriers.txt```
-          ```awk '{for (i=5; i<=NF; i++) if ($i ~ /1/) print i}' class2_genotypes.txt > class2_carriers.txt```
+         ```awk '{for (i=5; i<=NF; i++) if ($i ~ /1/) print i}' class1_genotypes.txt > class1_carriers.txt```
+      
+         ```awk '{for (i=5; i<=NF; i++) if ($i ~ /1/) print i}' class2_genotypes.txt > class2_carriers.txt```
 
 6. LINK CARRIERS TO PHENOTYPES
     - Match carrier IDs to the .ped file:
@@ -418,6 +421,7 @@ FOR VISUALIZATION: Scatter plot & bar plot
       Summarize the phenotypes of carriers:
       
         ```cut -f6 class1_carrier_phenotypes.txt | sort | uniq -c```
+      
         ```cut -f6 class2_carrier_phenotypes.txt | sort | uniq -c```
 
 
