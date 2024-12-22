@@ -371,7 +371,7 @@ FOR VISUALIZATION: Scatter plot & bar plot
 
     Use bcftools to filter the VCF for these markers:
 
-    ```bcftools view -T marker_ids.txt rare_variants.vcf.gz -Oz -o rare_variants_in_genes.vcf.gz```
+    ```bcftools view -t marker_ids.txt rare_variants.vcf.gz -Oz -o rare_variants_in_genes.vcf.gz```
 
 3. CLASSIFY VARIANTS INTO ANNOTATION GROUPS
     - Separate variants into Class 1 and Class 2 based on the ann column:
