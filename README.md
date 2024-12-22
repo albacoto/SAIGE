@@ -375,6 +375,7 @@ FOR VISUALIZATION: Scatter plot & bar plot
 
 3. CLASSIFY VARIANTS INTO ANNOTATION GROUPS
     - Separate variants into Class 1 and Class 2 based on the ann column:
+
         Class 1: pLoF or severeMis.
 
        ```grep -E 'pLoF|missense' gene.maker.annotation | awk '{print $2}' > class1_marker_ids.txt```
