@@ -316,6 +316,36 @@ OUPUT FILES:
 # ANALYSIS OF THE RESULTS
 Perform the analysis with Rstudio
 
+## Comparison of my ASD output vs Paper (NATURE, Table11)
+We are going to compare the output of STEP2 with one table of paper: "Rare coding variation provides insight into the genetic architecture and phenotypic context of autism". That table contains some information that is going to help us get a comparison of out otuput with other outputs so we can validate and give some sense into our results. The information of utility that Table 11 gives us is: genes and its respective p-value.
+
+1. Load Table 11 & my data (my results)
+2. Filter Table 11 to only include genes present in my data
+3. Merge the 2 tables based on common gene column
+4. Select only the relevenat columns and calculate the difference between 2 pvalues
+
+What we can obtain from the analysis/comparison:
+- Genes with lowest p-values difference (ex: 20 genes)
+- 20 genes with smallest p_TADA_ASD (which is the pvalue from the paper)
+- 20 genes with smallest pvalue (which is the pvalue that I obtained)
+We can overlap these last 2 combination of genes to find tihe overlapping genes
+
+FOR VISUALIZATION: Scatter plot & bar plot
 
  
+## Comparison of my ADHD output vs Paper (Table3)
+We will make the same comparison as before but with the ADHD results from SAIGE+ (STEP2) and comparing it with another table from another paper: "Rare de novo damaging DNA variants are enriched in attention-deficit/hyperactivity disorder and implicate risk genes"
+
+We will follow the same steps
+
+What we can obtain from the analysis/comparison:
+- Genes with lowest p-values difference (ex: 20 genes)
+- 100 genes with smallest p_TADA_ASD (which is the pvalue from the paper)
+- 100 genes with smallest pvalue (which is the pvalue that I obtained)
+We can overlap these last 2 combination of genes to find tihe overlapping genes (we did it with a larger amount of genes this time because with lower genes the overlpaping genes dataset was empty).
+
+FOR VISUALIZATION: Scatter plot & bar plot
+
+
+
 
