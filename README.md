@@ -366,48 +366,59 @@ FOR VISUALIZATION: Scatter plot & bar plot
 
 
   Extract all markerID values from gene.maker.annotation:
+   
     ```awk '{print $2}' gene.maker.annotation > marker_ids.txt```
 
     Use bcftools to filter the VCF for these markers:
-     ```bcftools view -T marker_ids.txt rare_variants.vcf.gz -Oz -o rare_variants_in_genes.vcf.gz```
+
+    ```bcftools view -T marker_ids.txt rare_variants.vcf.gz -Oz -o rare_variants_in_genes.vcf.gz```
 
 3. CLASSIFY VARIANTS INTO ANNOTATION GROUPS
     - Separate variants into Class 1 and Class 2 based on the ann column:
         Class 1: pLoF or severeMis.
-            ```grep -E 'pLoF|missense' gene.maker.annotation | awk '{print $2}' > class1_marker_ids.txt
-               bcftools view -T class1_marker_ids.txt rare_variants_in_genes.vcf.gz -Oz -o class1_variants.vcf.gz```
+
+          ```grep -E 'pLoF|missense' gene.maker.annotation | awk '{print $2}' > class1_marker_ids.txt
+             bcftools view -T class1_marker_ids.txt rare_variants_in_genes.vcf.gz -Oz -o class1_variants.vcf.gz```
       
         Class 2: moderateMis.
-            ```grep 'moderateMis' gene.maker.annotation | awk '{print $2}' > class2_marker_ids.txt
-               bcftools view -T class2_marker_ids.txt rare_variants_in_genes.vcf.gz -Oz -o class2_variants.vcf.gz```
+
+          ```grep 'moderateMis' gene.maker.annotation | awk '{print $2}' > class2_marker_ids.txt
+             bcftools view -T class2_marker_ids.txt rare_variants_in_genes.vcf.gz -Oz -o class2_variants.vcf.gz```
       
 4. IDENTIFY CARRIERS
     - Extract genotypes for all individuals in the filtered VCFs:
         For Class 1:
-        ```bcftools query -f '%CHROM\t%POS\t%REF\t%ALT[\t%GT]\n' class1_variants.vcf.gz > class1_genotypes.txt```
+
+          ```bcftools query -f '%CHROM\t%POS\t%REF\t%ALT[\t%GT]\n' class1_variants.vcf.gz > class1_genotypes.txt```
+
         For Class 2:
-        ```bcftools query -f '%CHROM\t%POS\t%REF\t%ALT[\t%GT]\n' class2_variants.vcf.gz > class2_genotypes.txt```
+
+          ```bcftools query -f '%CHROM\t%POS\t%REF\t%ALT[\t%GT]\n' class2_variants.vcf.gz > class2_genotypes.txt```
       
     - Identify carriers (carriers have genotypes 0/1, 1/0, or 1/1)
-        ```awk '{for (i=5; i<=NF; i++) if ($i ~ /1/) print i}' class1_genotypes.txt > class1_carriers.txt```
-        ```awk '{for (i=5; i<=NF; i++) if ($i ~ /1/) print i}' class2_genotypes.txt > class2_carriers.txt```
+
+          ```awk '{for (i=5; i<=NF; i++) if ($i ~ /1/) print i}' class1_genotypes.txt > class1_carriers.txt```
+          ```awk '{for (i=5; i<=NF; i++) if ($i ~ /1/) print i}' class2_genotypes.txt > class2_carriers.txt```
 
 5. LINK CARRIERS TO PHENOTYPES
     - Match carrier IDs to the .ped file:
       Extract rows from the .ped file that correspond to the carriers:
 
-    ```grep -Ff class1_carriers.txt input.ped > class1_carrier_phenotypes.txt```
-    ```grep -Ff class2_carriers.txt input.ped > class2_carrier_phenotypes.txt```
+        ```grep -Ff class1_carriers.txt input.ped > class1_carrier_phenotypes.txt```
+      
+        ```grep -Ff class2_carriers.txt input.ped > class2_carrier_phenotypes.txt```
    
 6. ANALYZE RESULTS
     - Compare the burden of rare variants across classes and phenotypes:
       Count the number of carriers for Class 1 and Class 2:
-    ```wc -l class1_carrier_phenotypes.txt```
-    ``` wc -l class2_carrier_phenotypes.txt```
+    
+        ```wc -l class1_carrier_phenotypes.txt```
+        ``` wc -l class2_carrier_phenotypes.txt```
 
       Summarize the phenotypes of carriers:
-    ```cut -f6 class1_carrier_phenotypes.txt | sort | uniq -c```
-    ```cut -f6 class2_carrier_phenotypes.txt | sort | uniq -c```
+      
+        ```cut -f6 class1_carrier_phenotypes.txt | sort | uniq -c```
+        ```cut -f6 class2_carrier_phenotypes.txt | sort | uniq -c```
 
 
     - Visualize results: Create bar plots or summary tables showing the burden of rare variants for each phenotype.
