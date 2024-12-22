@@ -380,13 +380,13 @@ FOR VISUALIZATION: Scatter plot & bar plot
 
        ```grep -E 'pLoF|missense' gene.maker.annotation | awk '{print $2}' > class1_marker_ids.txt```
       
-       ``` bcftools view -T class1_marker_ids.txt rare_variants_in_genes.vcf.gz -Oz -o class1_variants.vcf.gz ```
+       ``` bcftools view -t class1_marker_ids.txt rare_variants_in_genes.vcf.gz -Oz -o class1_variants.vcf.gz ```
       
         Class 2: moderateMis.
 
         ``` grep 'moderateMis' gene.maker.annotation | awk '{print $2}' > class2_marker_ids.txt```
    
-        ```bcftools view -T class2_marker_ids.txt rare_variants_in_genes.vcf.gz -Oz -o class2_variants.vcf.gz```
+        ```bcftools view -t class2_marker_ids.txt rare_variants_in_genes.vcf.gz -Oz -o class2_variants.vcf.gz```
       
 5. IDENTIFY CARRIERS
     - Extract genotypes for all individuals in the filtered VCFs:
