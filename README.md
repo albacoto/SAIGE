@@ -352,81 +352,37 @@ FOR VISUALIZATION: Scatter plot & bar plot
 1. DEFINE RARE VARIANTS
     - Filter the VCF for rare variants based on MAF (<1%) --> use bcftools
 
-        ```bcftools view -i 'INFO/MAF<0.01' yourfile.vcf.gz -Oz -o rare_variants.vcf.gz```
+        ```bcftools view -i 'INFO/MAF<0.01' myfile.vcf.gz -Oz -o rare_variants.vcf.gz```
 
         This creates a new VCF file (rare_variants.vcf.gz) containing only rare variants.
 
-2. EXTRACT VARIANTS BASED ON GENE-MARKER MATCHES
-    - Match variants in the VCF to markerID in gene.maker.annotation:
 
-* Structure of gene.maker.annotation:
-    gene: Gene names.
-    markerID: Variant IDs (e.g., chromosomal positions like chr:pos).
-    ann: Annotation information (e.g., pLoF, missense, etc.).
+2. EXTRACT INFORMATION ABOUT VARIANTS
+
+   ```bcftools query -f '%CHROM\t%POS\t%REF\t%ALT[\t%GT]\n' rare_variants.vcf.gz > rare_variants_genotypes.txt```
+ 
+3. IDENTIFY CARRIERS
+
+awk '{for (i=5; i<=NF; i++) if ($i ~ /1/) print $i, $1, $2, $3, $4}' rare_variants_genotypes.txt > carriers.txt
+
+awk '{for (i=5; i<=NF; i++) if ($i ~ /1/) print $1, $2, $3, $4, i}' rare_variants_genotypes.txt > carriers_with_ids.txt
 
 
-  Extract all markerID values from gene.maker.annotation:
+4. EXTRACT SAMPLE NAMES FROM VCF FILE
    
-    ```awk '{print $2}' gene.maker.annotation > marker_ids.txt```
+bcftools query -l rare_variants.vcf.gz > sample_names.txt
 
-    Use bcftools to filter the VCF for these markers:
+5. MAP COLUMN INDICES TO SAMPLE NAMES
 
-    ```bcftools view -t marker_ids.txt rare_variants.vcf.gz -Oz -o rare_variants_in_genes.vcf.gz```
-
-3. CLASSIFY VARIANTS INTO ANNOTATION GROUPS
-    - Separate variants into Class 1 and Class 2 based on the ann column:
-
-        Class 1: pLoF or severeMis.
-
-       ```grep -E 'pLoF|missense' gene.maker.annotation | awk '{print $2}' > class1_marker_ids.txt```
-      
-       ``` bcftools view -t class1_marker_ids.txt rare_variants_in_genes.vcf.gz -Oz -o class1_variants.vcf.gz ```
-      
-        Class 2: moderateMis.
-
-        ``` grep 'moderateMis' gene.maker.annotation | awk '{print $2}' > class2_marker_ids.txt```
-   
-        ```bcftools view -t class2_marker_ids.txt rare_variants_in_genes.vcf.gz -Oz -o class2_variants.vcf.gz```
-      
-5. IDENTIFY CARRIERS
-    - Extract genotypes for all individuals in the filtered VCFs:
-        For Class 1:
-
-         ```bcftools query -f '%CHROM\t%POS\t%REF\t%ALT[\t%GT]\n' class1_variants.vcf.gz > class1_genotypes.txt```
-
-        For Class 2:
-
-         ```bcftools query -f '%CHROM\t%POS\t%REF\t%ALT[\t%GT]\n' class2_variants.vcf.gz > class2_genotypes.txt```
-      
-    - Identify carriers (carriers have genotypes 0/1, 1/0, or 1/1)
-
-         ```awk '{for (i=5; i<=NF; i++) if ($i ~ /1/) print i}' class1_genotypes.txt > class1_carriers.txt```
-      
-         ```awk '{for (i=5; i<=NF; i++) if ($i ~ /1/) print i}' class2_genotypes.txt > class2_carriers.txt```
-
-6. LINK CARRIERS TO PHENOTYPES
-    - Match carrier IDs to the .ped file:
-      Extract rows from the .ped file that correspond to the carriers:
-
-        ```grep -Ff class1_carriers.txt input.ped > class1_carrier_phenotypes.txt```
-      
-        ```grep -Ff class2_carriers.txt input.ped > class2_carrier_phenotypes.txt```
-   
-7. ANALYZE RESULTS
-    - Compare the burden of rare variants across classes and phenotypes:
-      Count the number of carriers for Class 1 and Class 2:
-    
-        ```wc -l class1_carrier_phenotypes.txt```
-        ``` wc -l class2_carrier_phenotypes.txt```
-
-      Summarize the phenotypes of carriers:
-      
-        ```cut -f6 class1_carrier_phenotypes.txt | sort | uniq -c```
-      
-        ```cut -f6 class2_carrier_phenotypes.txt | sort | uniq -c```
+awk 'NR==FNR {samples[NR]=$1; next} {print $1, $2, $3, $4, samples[$5]}' sample_names.txt carriers_with_ids.txt > carriers_with_sample_ids.txt
 
 
-    - Visualize results: Create bar plots or summary tables showing the burden of rare variants for each phenotype.
+6. MATCH CARRIERS TO PHENOTYPE INFO
+
+awk 'NR==FNR {carriers[$5]=$0; next} $1 in carriers {print carriers[$1], $0}' carriers_with_sample_ids.txt ped_file.ped > carriers_with_phenotypes.txt
+
+
+
 
 
 
