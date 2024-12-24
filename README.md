@@ -389,3 +389,5 @@ awk 'NR==FNR {carriers[$5]=$0; next} $1 in carriers {print carriers[$1], $0}' ca
 
 
 
+
+
