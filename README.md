@@ -363,23 +363,33 @@ FOR VISUALIZATION: Scatter plot & bar plot
  
 3. IDENTIFY CARRIERS
 
-awk '{for (i=5; i<=NF; i++) if ($i ~ /1/) print $i, $1, $2, $3, $4}' rare_variants_genotypes.txt > carriers.txt
+   ```awk '{for (i=5; i<=NF; i++) if ($i ~ /1/) print $1, $2, $3, $4, i}' rare_variants_genotypes.txt > carriers_with_ids.txt```
 
-awk '{for (i=5; i<=NF; i++) if ($i ~ /1/) print $1, $2, $3, $4, i}' rare_variants_genotypes.txt > carriers_with_ids.txt
-
-
-4. EXTRACT SAMPLE NAMES FROM VCF FILE
-   
-bcftools query -l rare_variants.vcf.gz > sample_names.txt
-
-5. MAP COLUMN INDICES TO SAMPLE NAMES
-
-awk 'NR==FNR {samples[NR]=$1; next} {print $1, $2, $3, $4, samples[$5]}' sample_names.txt carriers_with_ids.txt > carriers_with_sample_ids.txt
+   This command iterates over the genotype columns ($5 to $NF) and checks for the presence of a 1
 
 
-6. MATCH CARRIERS TO PHENOTYPE INFO
+4. MAP COLUMN INDICES TO SAMPLE NAMES
 
-awk 'NR==FNR {carriers[$5]=$0; next} $1 in carriers {print carriers[$1], $0}' carriers_with_sample_ids.txt ped_file.ped > carriers_with_phenotypes.txt
+  ```awk 'NR==FNR {samples[NR]=$1; next} {print $1, $2, $3, $4, samples[$5]}' sample_names.txt carriers_with_ids.txt > carriers_with_sample_ids.txt```
+
+5. EXTRACT CARRIER IDs
+
+  ```awk '{print $5}' carriers_with_sample_ids.txt | sort | uniq > carriers_ids.txt```
+
+6. EXTRACT PED FILE IDs
+
+  ```awk -F',' '{print $1}' ped_file.ped | sort | uniq > ped_ids.txt```
+
+
+  Following we just need to load this into and Rstudio and add the column names which are the same as for the .ped file. 
+  Finally, we can obtain the % of ASD and ADHD individuals that are carriers.
+
+
+
+
+
+
+
 
 
 
