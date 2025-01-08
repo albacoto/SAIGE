@@ -386,10 +386,82 @@ FOR VISUALIZATION: Scatter plot & bar plot
 
 
 
+## Comparison of the cross disorder between ASD & ADHD FOR TOP 10 GENES:
+
+1. Obtain the Top 10 Gene Names from SAIGE Output
+
+```sort -k4,4g saige_output.txt | awk '{print $1}' | head -n 10 > top_10_genes.txt```
 
 
+2. Extract pLoF, severeMis, and moderateMis Variants IDs
 
 
+CLASS I VARIANTS
+```awk 'NR==FNR {genes[$1]; next} $1 in genes && $3 ~ /pLoF|severeMis/ {print $2}' top_10_genes.txt asd_adhd_sz_bp_ctl...gene.marker.ann.txt > class1_variants.txt ```
+
+CLASS II VARIANTS
+```awk 'NR==FNR {genes[$1]; next} $1 in genes && $3 ~ /moderateMis/ {print $2}' top_10_genes.txt asd_adhd_sz_bp_ctl...gene.marker.ann.txt > class2_variants.txt```
+
+
+3. Extract Corresponding Variants from the Cross Disorder VCF
+
+CLASS I VARIANTS
+```bcftools view -T class1_variants.txt cross_disorder_ASD_ADHD.vcf.gz -Oz -o class1_variants.vcf.gz```
+
+CLASS II VARIANTS
+```bcftools view -T class2_variants.txt cross_disorder_ASD_ADHD.vcf.gz -Oz -o class2_variants.vcf.gz```
+
+
+4. Filter Rare Variants by MAF (to keep only rare variants (MAF <= 0.0001))
+
+CLASS I:
+```bcftools view -i 'INFO/MAF<=0.0001' class1_variants.vcf.gz -Oz -o class1_rare_variants.vcf.gz```
+
+CLASS II:
+```bcftools view -i 'INFO/MAF<=0.0001' class2_variants.vcf.gz -Oz -o class2_rare_variants.vcf.gz```
+
+
+5. Identify carriers
+
+CLASS I:
+```bcftools query -f '%CHROM\t%POS\t%REF\t%ALT[\t%GT]\n' class1_rare_variants.vcf.gz > class1_genotypes.txt ```
+
+```awk '{for (i=5; i<=NF; i++) if ($i ~ /1/) print $1, $2, $3, $4, i}' class1_genotypes.txt > class1_carriers_with_ids.txt```
+
+
+CLASS II:
+``` bcftools query -f '%CHROM\t%POS\t%REF\t%ALT[\t%GT]\n' class2_rare_variants.vcf.gz > class2_genotypes.txt```
+
+``` awk '{for (i=5; i<=NF; i++) if ($i ~ /1/) print $1, $2, $3, $4, i}' class2_genotypes.txt > class2_carriers_with_ids.txt```
+
+
+6. Map Sample Names to Carrier IDs
+
+CLASS I:
+```bcftools query -l class1_rare_variants.vcf.gz > sample_names.txt```
+
+```awk 'NR==FNR {samples[NR]=$1; next} {print $1, $2, $3, $4, samples[$5]}' sample_names.txt class1_carriers_with_ids.txt > class1_carriers_with_sample_ids.txt```
+
+
+CLASS II:
+```bcftools query -l class2_rare_variants.vcf.gz > sample_names.txt```
+```awk 'NR==FNR {samples[NR]=$1; next} {print $1, $2, $3, $4, samples[$5]}' sample_names.txt class2_carriers_with_ids.txt > class2_carriers_with_sample_ids.txt```
+
+
+7. Merge with PED File
+
+CLASS I:
+```awk -F',' '{print $1}' ped_file.ped | sort | uniq > ped_ids.txt```
+```awk '{print $5}' class1_carriers_with_sample_ids.txt | sort | uniq > class1_carrier_ids.txt```
+```awk 'NR==FNR {carriers[$1]=$0; next} $1 in carriers {print carriers[$1], $0}' class1_carriers_with_sample_ids.txt ped_file.ped > class1_carriers_with_phenotypes.txt```
+
+
+CLASS II:
+```awk '{print $5}' class2_carriers_with_sample_ids.txt | sort | uniq > class2_carrier_ids.txt```
+```awk 'NR==FNR {carriers[$1]=$0; next} $1 in carriers {print carriers[$1], $0}' class2_carriers_with_sample_ids.txt ped_file.ped > class2_carriers_with_phenotypes.txt```
+
+
+8. Analyze results (in Rstudio)
 
 
 
