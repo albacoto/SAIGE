@@ -396,12 +396,17 @@ We can do it with Rstudio
 2. Extract pLoF, severeMis, and moderateMis Variants IDs
 
 
-CLASS I VARIANTS
+CLASS I VARIANTS:
+
 ```awk 'NR==FNR {genes[$1]; next} $1 in genes && $3 ~ /pLoF|severeMis/ {print $2}' top_10_genes.txt asd_adhd_sz_bp_ctl...gene.marker.ann.txt > class1_variants.txt ```
 
-CLASS II VARIANTS
+```awk -F':' '{if (NF == 4) print $1 "\t" $2}' class1_variants.txt > fixed_class1_variants.txt```
+
+CLASS II VARIANTS:
+
 ```awk 'NR==FNR {genes[$1]; next} $1 in genes && $3 ~ /moderateMis/ {print $2}' top_10_genes.txt asd_adhd_sz_bp_ctl...gene.marker.ann.txt > class2_variants.txt```
 
+```awk -F':' '{if (NF == 4) print $1 "\t" $2}' class2_variants.txt > fixed_class2_variants.txt```
 
 3. Extract Corresponding Variants from the Cross Disorder VCF
 
