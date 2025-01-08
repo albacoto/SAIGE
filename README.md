@@ -463,6 +463,8 @@ CLASS I:
 ```awk 'NR==FNR {carriers[$5]=$0; next} $1 in carriers {print carriers[$1], $0}' class1_carriers_with_sample_ids.txt ped_file.ped > class1_carriers_with_phenotypes.txt```
 
 
+
+
 CLASS II:
 ```awk '{print $5}' class2_carriers_with_sample_ids.txt | sort | uniq > class2_carrier_ids.txt```
 ```awk 'NR==FNR {carriers[$5]=$0; next} $1 in carriers {print carriers[$1], $0}' class2_carriers_with_sample_ids.txt ped_file.ped > class2_carriers_with_phenotypes.txt```
