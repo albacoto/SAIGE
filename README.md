@@ -390,7 +390,7 @@ FOR VISUALIZATION: Scatter plot & bar plot
 
 1. Obtain the Top 10 Gene Names from SAIGE Output
 
-```sort -k4,4g saige_output.txt | awk '{print $1}' | head -n 10 > top_10_genes.txt```
+We can do it with Rstudio
 
 
 2. Extract pLoF, severeMis, and moderateMis Variants IDs
