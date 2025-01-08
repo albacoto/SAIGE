@@ -457,13 +457,15 @@ CLASS II:
 
 CLASS I:
 ```awk -F',' '{print $1}' ped_file.ped | sort | uniq > ped_ids.txt```
+
 ```awk '{print $5}' class1_carriers_with_sample_ids.txt | sort | uniq > class1_carrier_ids.txt```
-```awk 'NR==FNR {carriers[$1]=$0; next} $1 in carriers {print carriers[$1], $0}' class1_carriers_with_sample_ids.txt ped_file.ped > class1_carriers_with_phenotypes.txt```
+
+```awk 'NR==FNR {carriers[$5]=$0; next} $1 in carriers {print carriers[$1], $0}' class1_carriers_with_sample_ids.txt ped_file.ped > class1_carriers_with_phenotypes.txt```
 
 
 CLASS II:
 ```awk '{print $5}' class2_carriers_with_sample_ids.txt | sort | uniq > class2_carrier_ids.txt```
-```awk 'NR==FNR {carriers[$1]=$0; next} $1 in carriers {print carriers[$1], $0}' class2_carriers_with_sample_ids.txt ped_file.ped > class2_carriers_with_phenotypes.txt```
+```awk 'NR==FNR {carriers[$5]=$0; next} $1 in carriers {print carriers[$1], $0}' class2_carriers_with_sample_ids.txt ped_file.ped > class2_carriers_with_phenotypes.txt```
 
 
 8. Analyze results (in Rstudio)
