@@ -398,32 +398,45 @@ We can do it with Rstudio
 
 CLASS I VARIANTS:
 
-```awk 'NR==FNR {genes[$1]; next} $1 in genes && $3 ~ /pLoF|severeMis/ {print $2}' top_10_genes.txt asd_adhd_sz_bp_ctl...gene.marker.ann.txt > class1_variants.txt ```
+```awk 'NR==FNR {genes[$1]; next} $1 in genes && $3 ~ /pLoF|severeMis/ {print $2, $1}' top_10_genes.txt asd_adhd_sz_bp_ctl...gene.marker.ann.txt > class1_variants_with_genes.txt```
 
-```awk -F':' '{if (NF == 4) print $1 "\t" $2}' class1_variants.txt > fixed_class1_variants.txt```
+
+```awk -F':' '{if (NF == 4) print $1 "\t" $2 "\t" $3 "\t" $4 "\t" $5}' class1_variants_with_genes.txt > fixed_class1_variants_with_genes.txt```
+   
 
 CLASS II VARIANTS:
 
-```awk 'NR==FNR {genes[$1]; next} $1 in genes && $3 ~ /moderateMis/ {print $2}' top_10_genes.txt asd_adhd_sz_bp_ctl...gene.marker.ann.txt > class2_variants.txt```
+```awk 'NR==FNR {genes[$1]; next} $1 in genes && $3 ~ /moderateMis/ {print $2, $1}' top_10_genes.txt asd_adhd_sz_bp_ctl...gene.marker.ann.txt > class2_variants_with_genes.txt```
 
-```awk -F':' '{if (NF == 4) print $1 "\t" $2}' class2_variants.txt > fixed_class2_variants.txt```
+```awk -F':' '{if (NF == 4) print $1 "\t" $2 "\t" $3 "\t" $4 "\t" $5}' class2_variants_with_genes.txt > fixed_class2_variants_with_genes.txt```
+
 
 3. Extract Corresponding Variants from the Cross Disorder VCF
 
 CLASS I VARIANTS
-```bcftools view -T class1_variants.txt cross_disorder_ASD_ADHD.vcf.gz -Oz -o class1_variants.vcf.gz```
+
+
+```awk -F'[: ]' '{print $1"\t"$2"\t"$4"\t"$5}' class1_variants_with_genes.txt > fixed_class1_variants_with_genes.txt```
+
+
+```bcftools view -T fixed_class1_variants_with_genes.txt cross_disorder_ASD_ADHD.vcf.gz -Oz -o class1_variants_with_genes.vcf.gz```
+
 
 CLASS II VARIANTS
-```bcftools view -T class2_variants.txt cross_disorder_ASD_ADHD.vcf.gz -Oz -o class2_variants.vcf.gz```
+
+```awk -F'[: ]' '{print $1"\t"$2"\t"$4"\t"$5}' class2_variants_with_genes.txt > fixed_class2_variants_with_genes.txt```
+
+```bcftools view -T fixed_class2_variants_with_genes.txt cross_disorder_ASD_ADHD.vcf.gz -Oz -o class2_variants_with_genes.vcf.gz```
 
 
 4. Filter Rare Variants by MAF (to keep only rare variants (MAF <= 0.0001))
 
 CLASS I:
-```bcftools view -i 'INFO/MAF<=0.0001' class1_variants.vcf.gz -Oz -o class1_rare_variants.vcf.gz```
+```bcftools view -i 'INFO/MAF<=0.0001' class1_variants_with_genes.vcf.gz -Oz -o class1_rare_variants_with_genes.vcf.gz```
+
 
 CLASS II:
-```bcftools view -i 'INFO/MAF<=0.0001' class2_variants.vcf.gz -Oz -o class2_rare_variants.vcf.gz```
+```bcftools view -i 'INFO/MAF<=0.0001' class2_variants_with_genes.vcf.gz -Oz -o class2_rare_variants_with_genes.vcf.gz```
 
 
 5. Identify carriers
