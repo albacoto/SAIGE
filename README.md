@@ -458,31 +458,30 @@ CLASS II:
 7. Map Column Indices to Sample Names (Extract sample names from the VCF and map them to the corresponding column indices)
 
 CLASS I:
-```bcftools query -l class1_rare_variants.vcf.gz > sample_names.txt```
+```bcftools query -l rare_class1_variants.vcf.gz > sample_names.txt```
 
-```awk 'NR==FNR {samples[NR]=$1; next} {print $1, $2, $3, $4, samples[$5]}' sample_names.txt class1_carriers_with_ids.txt > class1_carriers_with_sample_ids.txt```
+```awk 'NR==FNR {samples[NR]=$1; next} {print $1, $2, $3, $4, samples[$5-4]}' sample_names.txt class1_carriers_with_ids.txt > class1_carriers_with_sample_ids.txt```
 
 
 CLASS II:
-```bcftools query -l class2_rare_variants.vcf.gz > sample_names.txt```
-```awk 'NR==FNR {samples[NR]=$1; next} {print $1, $2, $3, $4, samples[$5]}' sample_names.txt class2_carriers_with_ids.txt > class2_carriers_with_sample_ids.txt```
+```bcftools query -l rare_class2_variants.vcf.gz > sample_names2.txt```
+
+```awk 'NR==FNR {samples[NR]=$1; next} {print $1, $2, $3, $4, samples[$5-4]}' sample_names2.txt class2_carriers_with_ids.txt > class2_carriers_with_sample_ids.txt```
 
 
-7. Merge with PED File
+7. Add gene names (Append gene names to the carrier information)
 
 CLASS I:
-```awk -F',' '{print $1}' ped_file.ped | sort | uniq > ped_ids.txt```
+```awk '{print $1, $2, $3}' fixed_class1_variants_with_genes.txt > gene_mapping.txt```
 
-```awk '{print $5}' class1_carriers_with_sample_ids.txt | sort | uniq > class1_carrier_ids.txt```
-
-```awk 'NR==FNR {carriers[$5]=$0; next} $1 in carriers {print carriers[$1], $0}' class1_carriers_with_sample_ids.txt ped_file.ped > class1_carriers_with_phenotypes.txt```
-
+```awk 'NR==FNR {genes[$1,$2]=$3; next} ($1,$2) in genes {print $0, genes[$1,$2]}' gene_mapping.txt class1_carriers_with_sample_ids.txt > class1_carriers_with_genes_and_sample_ids.txt```
 
 
 
 CLASS II:
-```awk '{print $5}' class2_carriers_with_sample_ids.txt | sort | uniq > class2_carrier_ids.txt```
-```awk 'NR==FNR {carriers[$5]=$0; next} $1 in carriers {print carriers[$1], $0}' class2_carriers_with_sample_ids.txt ped_file.ped > class2_carriers_with_phenotypes.txt```
+```awk '{print $1, $2, $3}' fixed_class2_variants_with_genes.txt > gene_mapping2.txt```
+
+```awk 'NR==FNR {genes[$1,$2]=$3; next} ($1,$2) in genes {print $0, genes[$1,$2]}' gene_mapping2.txt class2_carriers_with_sample_ids.txt > class2_carriers_with_genes_and_sample_ids.txt```
 
 
 8. Analyze results (in Rstudio)
