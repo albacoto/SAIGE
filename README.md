@@ -472,14 +472,14 @@ CLASS II:
 7. Add gene names (Append gene names to the carrier information)
 
 CLASS I:
-```awk '{print $1, $2, $3}' fixed_class1_variants_with_genes.txt > gene_mapping.txt```
+```awk '{print $1, $2, $NF}' fixed_class1_variants_with_genes.txt > gene_mapping.txt```
 
 ```awk 'NR==FNR {genes[$1,$2]=$3; next} ($1,$2) in genes {print $0, genes[$1,$2]}' gene_mapping.txt class1_carriers_with_sample_ids.txt > class1_carriers_with_genes_and_sample_ids.txt```
 
 
 
 CLASS II:
-```awk '{print $1, $2, $3}' fixed_class2_variants_with_genes.txt > gene_mapping2.txt```
+```awk '{print $1, $2, $NF}' fixed_class2_variants_with_genes.txt > gene_mapping2.txt```
 
 ```awk 'NR==FNR {genes[$1,$2]=$3; next} ($1,$2) in genes {print $0, genes[$1,$2]}' gene_mapping2.txt class2_carriers_with_sample_ids.txt > class2_carriers_with_genes_and_sample_ids.txt```
 
