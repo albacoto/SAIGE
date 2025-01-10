@@ -393,16 +393,17 @@ FOR VISUALIZATION: Scatter plot & bar plot
 We can do it with Rstudio
 
 
-2. Extract pLoF, severeMis, and moderateMis Variants IDs
-
+2. Extract pLoF, severeMis, and moderateMis Variants IDs (Filter the variants for pLoF and severeMis from the annotation file)
 
 CLASS I VARIANTS:
+
 
 ```awk 'NR==FNR {genes[$1]; next} $1 in genes && $3 ~ /pLoF|severeMis/ {print $2, $1}' top_10_genes.txt asd_adhd_sz_bp_ctl...gene.marker.ann.txt > class1_variants_with_genes.txt```
 
 
-```awk -F':' '{if (NF == 4) print $1 "\t" $2 "\t" $3 "\t" $4 "\t" $5}' class1_variants_with_genes.txt > fixed_class1_variants_with_genes.txt```
-   
+```awk -F':' '{print $1 "\t" $2 "\t" $3}' class1_variants_with_genes.txt > fixed_class1_variants_with_genes.txt```
+
+
 
 CLASS II VARIANTS:
 
@@ -415,45 +416,46 @@ CLASS II VARIANTS:
 
 CLASS I VARIANTS
 
+```cut -f 1,2 fixed_class1_variants_with_genes.txt > class1_positions.txt```
 
-```awk -F'[: ]' '{print $1"\t"$2"\t"$4"\t"$5}' class1_variants_with_genes.txt > fixed_class1_variants_with_genes.txt```
-
-
-```bcftools view -T fixed_class1_variants_with_genes.txt cross_disorder_ASD_ADHD.vcf.gz -Oz -o class1_variants_with_genes.vcf.gz```
+```bcftools view -T class1_positions.txt cross_disorder_ASD_ADHD.vcf.gz -Oz -o class1_variants.vcf.gz```
 
 
 CLASS II VARIANTS
 
-```awk -F'[: ]' '{print $1"\t"$2"\t"$4"\t"$5}' class2_variants_with_genes.txt > fixed_class2_variants_with_genes.txt```
+```cut -f 1,2 fixed_class2_variants_with_genes.txt > class2_positions.txt```
 
-```bcftools view -T fixed_class2_variants_with_genes.txt cross_disorder_ASD_ADHD.vcf.gz -Oz -o class2_variants_with_genes.vcf.gz```
+```bcftools view -T class2_positions.txt cross_disorder_ASD_ADHD.vcf.gz -Oz -o class2_variants.vcf.gz```
 
 
 4. Filter Rare Variants by MAF (to keep only rare variants (MAF <= 0.0001))
 
 CLASS I:
-```bcftools view -i 'INFO/MAF<=0.0001' class1_variants_with_genes.vcf.gz -Oz -o class1_rare_variants_with_genes.vcf.gz```
-
+```bcftools view -i 'INFO/MAF<=0.0001' class1_variants.vcf.gz -Oz -o rare_class1_variants.vcf.gz```
 
 CLASS II:
-```bcftools view -i 'INFO/MAF<=0.0001' class2_variants_with_genes.vcf.gz -Oz -o class2_rare_variants_with_genes.vcf.gz```
+```bcftools view -i 'INFO/MAF<=0.0001' class2_variants.vcf.gz -Oz -o rare_class2_variants.vcf.gz```
 
 
-5. Identify carriers
+5. Query the genotypes (Extract the genotypes (GT field) from the filtered VCF)
 
 CLASS I:
-```bcftools query -f '%CHROM\t%POS\t%REF\t%ALT[\t%GT]\n' class1_rare_variants.vcf.gz > class1_genotypes.txt ```
 
-```awk '{for (i=5; i<=NF; i++) if ($i ~ /1/) print $1, $2, $3, $4, i}' class1_genotypes.txt > class1_carriers_with_ids.txt```
+```bcftools query -f '%CHROM\t%POS\t%REF\t%ALT[\t%GT]\n' rare_class1_variants.vcf.gz > class1_genotypes.txt```
 
 
 CLASS II:
-``` bcftools query -f '%CHROM\t%POS\t%REF\t%ALT[\t%GT]\n' class2_rare_variants.vcf.gz > class2_genotypes.txt```
+```bcftools query -f '%CHROM\t%POS\t%REF\t%ALT[\t%GT]\n' rare_class2_variants.vcf.gz > class2_genotypes.txt```
 
-``` awk '{for (i=5; i<=NF; i++) if ($i ~ /1/) print $1, $2, $3, $4, i}' class2_genotypes.txt > class2_carriers_with_ids.txt```
+6. Identyfy carriers (Identify carriers based on the presence of 0/1, 1/0, or 1/1 in the genotype fields)
 
+CLASS I:
+```awk '{for (i=5; i<=NF; i++) if ($i ~ /1/) print $1, $2, $3, $4, i}' class1_genotypes.txt > class1_carriers_with_ids.txt```
 
-6. Map Sample Names to Carrier IDs
+CLASS II:
+```awk '{for (i=5; i<=NF; i++) if ($i ~ /1/) print $1, $2, $3, $4, i}' class2_genotypes.txt > class2_carriers_with_ids.txt```
+
+7. Map Column Indices to Sample Names (Extract sample names from the VCF and map them to the corresponding column indices)
 
 CLASS I:
 ```bcftools query -l class1_rare_variants.vcf.gz > sample_names.txt```
